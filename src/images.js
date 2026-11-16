@@ -1,0 +1,180 @@
+export const images = {
+  "caipirinha": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/jgvn7p1582484435.jpg",
+    "source": "https://www.thecocktaildb.com/drink/11202",
+    "author": "TheCocktailDB.com",
+    "label": "Caipirinha",
+    "type": "drink",
+    "file": "images/caipirinha.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Caipirinha com gelo e limão"
+  },
+  "espresso-martini": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/n0sx531504372951.jpg",
+    "source": "https://www.thecocktaildb.com/drink/17212",
+    "author": "TheCocktailDB",
+    "label": "Espresso Martini",
+    "type": "drink",
+    "file": "images/espresso-martini.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Espresso Martini com espuma de café"
+  },
+  "cuba-libre": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/wmkbfj1606853905.jpg",
+    "source": "https://www.thecocktaildb.com/drink/11288",
+    "author": "Martin Belam (currybet)",
+    "label": "Cuba Libre",
+    "type": "drink",
+    "file": "images/cuba-libre.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Cuba Libre com gelo e limão"
+  },
+  "mojito": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg",
+    "source": "https://www.thecocktaildb.com/drink/11000",
+    "author": "anilaha https://pixabay.com/users/anilaha-16242978/",
+    "label": "Mojito",
+    "type": "drink",
+    "file": "images/mojito.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Mojito com hortelã e limão"
+  },
+  "strawberry-daiquiri": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/deu59m1504736135.jpg",
+    "source": "https://www.thecocktaildb.com/drink/12316",
+    "author": "TheCocktailDB",
+    "label": "Strawberry Daiquiri",
+    "type": "drink",
+    "file": "images/strawberry-daiquiri.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Daiquiri de morango em taças"
+  },
+  "long-island": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/wx7hsg1504370510.jpg",
+    "source": "https://www.thecocktaildb.com/drink/17204",
+    "author": "TheCocktailDB",
+    "label": "Long Island Iced Tea",
+    "type": "drink",
+    "file": "images/long-island.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Long Island Iced Tea com gelo"
+  },
+  "blue-lagoon": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/5wm4zo1582579154.jpg",
+    "source": "https://www.thecocktaildb.com/drink/11117",
+    "author": "TheCocktailDB",
+    "label": "Blue Lagoon",
+    "type": "drink",
+    "file": "images/blue-lagoon.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Blue Lagoon com gelo e limão"
+  },
+  "blue-margarita": {
+    "url": "https://www.thecocktaildb.com/images/media/drink/bry4qh1582751040.jpg",
+    "source": "https://www.thecocktaildb.com/drink/11118",
+    "author": "TheCocktailDB",
+    "label": "Blue Margarita",
+    "type": "drink",
+    "file": "images/blue-margarita.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Blue Margarita com limão"
+  },
+  "cranberry": {
+    "url": "https://www.thecocktaildb.com/images/ingredients/Cranberries.png",
+    "source": "https://www.thecocktaildb.com/api.php",
+    "author": "TheCocktailDB",
+    "label": "Cranberries",
+    "type": "ingredient",
+    "file": "images/cranberry.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Cranberries frescos"
+  },
+  "jagermeister": {
+    "url": "https://www.thecocktaildb.com/images/ingredients/Jagermeister.png",
+    "source": "https://www.thecocktaildb.com/api.php",
+    "author": "TheCocktailDB",
+    "label": "Jägermeister",
+    "type": "ingredient",
+    "file": "images/jagermeister.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Garrafa de Jägermeister"
+  },
+  "chocolate": {
+    "url": "https://www.thecocktaildb.com/images/ingredients/Chocolate.png",
+    "source": "https://www.thecocktaildb.com/api.php",
+    "author": "TheCocktailDB",
+    "label": "Chocolate",
+    "type": "ingredient",
+    "file": "images/chocolate.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Chocolate amargo"
+  },
+  "strawberries": {
+    "url": "https://www.thecocktaildb.com/images/ingredients/Strawberries.png",
+    "source": "https://www.thecocktaildb.com/api.php",
+    "author": "TheCocktailDB",
+    "label": "Morangos",
+    "type": "ingredient",
+    "file": "images/strawberries.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Morangos frescos"
+  },
+  "coffee": {
+    "url": "https://www.thecocktaildb.com/images/ingredients/Coffee.png",
+    "source": "https://www.thecocktaildb.com/api.php",
+    "author": "TheCocktailDB",
+    "label": "Café",
+    "type": "ingredient",
+    "file": "images/coffee.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Xícara de café"
+  },
+  "mango": {
+    "url": "https://www.thecocktaildb.com/images/ingredients/Mango.png",
+    "source": "https://www.thecocktaildb.com/api.php",
+    "author": "TheCocktailDB",
+    "label": "Manga",
+    "type": "ingredient",
+    "file": "images/mango.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Mangas maduras"
+  },
+  "blue-curacao": {
+    "url": "https://www.thecocktaildb.com/images/ingredients/Blue%20Curacao.png",
+    "source": "https://www.thecocktaildb.com/api.php",
+    "author": "TheCocktailDB",
+    "label": "Blue Curaçao",
+    "type": "ingredient",
+    "file": "images/blue-curacao.webp",
+    "width": 700,
+    "height": 700,
+    "alt": "Garrafa de Blue Curaçao"
+  },
+  "cashew": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Cashew_apple_with_nut_-_Caju.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "file": "images/cashew.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Cashew_apple_with_nut_-_Caju.jpg",
+    "author": "Ben Tavener",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "label": "Caju",
+    "type": "ingredient",
+    "width": 800,
+    "height": 536,
+    "alt": "Cajus com castanhas"
+  }
+};

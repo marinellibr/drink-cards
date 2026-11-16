@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { cards } from './cards';
+import { images } from './images';
 import { filterCards, randomCard, wheelRotation } from './helpers';
 import './style.css';
 function Glass({martini=false}) {
@@ -30,10 +31,20 @@ function Roulette({ entries, winner, onFinish, onClose, onView }) {
   <details className="wheel-legend"><summary>Drinks na roleta</summary><ol>{entries.map(card => <li key={card.id}><span>{card.id}</span> {card.nome}</li>)}</ol></details>
  </dialog>;
 }
+function RecipePhoto({ card, thumbnail = false }) {
+ const photo = images[card.imagem];
+ const [failed, setFailed] = useState(false);
+ const src = `${import.meta.env.BASE_URL}${photo.file}`;
+ if (thumbnail) return failed ? <span className="recipe-thumb thumb-fallback" aria-hidden="true">{card.id}</span> : <img className={`recipe-thumb ${photo.type}`} src={src} alt="" width="56" height="56" loading="lazy" decoding="async" onError={() => setFailed(true)}/>;
+ return <figure className={`recipe-photo ${photo.type}`}>
+  {failed ? <div className="photo-fallback"><p>Imagem indisponível</p><span>{photo.label}</span></div> : <img src={src} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async" onError={() => setFailed(true)}/>}
+  <figcaption><span>{photo.type === 'ingredient' ? `Ingrediente: ${photo.label}` : 'Imagem ilustrativa'}</span><a href={photo.source} target="_blank" rel="noreferrer">Foto: {photo.author}</a>{photo.license && <a href={photo.licenseUrl} target="_blank" rel="noreferrer">{photo.license}</a>}</figcaption>
+ </figure>;
+}
 function RecipeContent({ card, fullscreen = false }) {
  const Heading = fullscreen ? 'h1' : 'h4';
  return <div className="recipe-content">
-  <div className={`card-art recipe-art color-${Number(card.id) % 5}`} aria-hidden="true"><span className="number">NO. {card.id}</span><Glass martini={card.preparo === 'BATIDO'}/></div>
+  <RecipePhoto card={card}/>
   <div className="recipe-body"><p className="eyebrow">RECEITA {card.id}</p><Heading id={fullscreen ? 'recipe-title' : undefined}>{card.nome}</Heading><span className={`badge ${card.preparo.toLowerCase()}`}>{card.preparo}</span><p className="ingredients-label">INGREDIENTES</p><ul>{card.ingredientes.map(item => <li key={item}>{item}</li>)}</ul><div className="recipe-method"><p className="ingredients-label">MÉTODO DE PREPARO</p><p>{card.preparo.charAt(0) + card.preparo.slice(1).toLowerCase()}</p></div></div>
  </div>;
 }
@@ -82,7 +93,7 @@ function App() {
  <div className="controls"><label className="search"><span className="sr-only">Buscar por nome ou ingrediente</span><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Busque um drink ou ingrediente…"/>{query && <button aria-label="Limpar busca" onClick={()=>setQuery('')}>Limpar</button>}</label><div className="filters" aria-label="Filtrar por preparo">{['TODOS','MONTADO','BATIDO','MACERADO','LIQUIDIFICADO'].map(m=><button key={m} aria-pressed={m===method} onClick={()=>setMethod(m)} className={m===method?'active':''}>{m==='TODOS'?'Todos':m[0]+m.slice(1).toLowerCase()}</button>)}</div></div>
  <div className="results" role="status"><span>{visible.length} {visible.length===1?'drink encontrado':'drinks encontrados'}</span>{chosen && <span>Seu sorteio: {chosen.nome}</span>}</div>
  {visible.length ? <div className="accordion-list">{visible.map(card => <article key={card.id} id={`drink-${card.id}`} className={`drink-accordion ${chosen?.id === card.id ? 'selected' : ''} ${expanded === card.id ? 'is-open' : ''}`}>
-  <h3 className="accordion-heading"><button id={`toggle-${card.id}`} className="accordion-trigger" aria-expanded={expanded === card.id} aria-controls={`recipe-${card.id}`} onClick={() => toggleCard(card.id)}><span className="accordion-number">{card.id}</span><span className="accordion-name">{card.nome}</span>{chosen?.id === card.id && <span className="accordion-chosen">Sorteado</span>}<span className="accordion-action">{expanded === card.id ? 'Fechar' : 'Abrir'}</span></button></h3>
+  <h3 className="accordion-heading"><button id={`toggle-${card.id}`} className="accordion-trigger" aria-expanded={expanded === card.id} aria-controls={`recipe-${card.id}`} onClick={() => toggleCard(card.id)}><RecipePhoto card={card} thumbnail/><span className="accordion-name">{card.nome}</span>{chosen?.id === card.id && <span className="accordion-chosen">Sorteado</span>}<span className="accordion-action">{expanded === card.id ? 'Fechar' : 'Abrir'}</span></button></h3>
   <div id={`recipe-${card.id}`} role="region" aria-labelledby={`toggle-${card.id}`} hidden={expanded !== card.id}><RecipeContent card={card}/></div>
  </article>)}</div> : <div className="empty"><h3>Nenhum drink por aqui.</h3><p>Tente outro ingrediente ou explore todas as receitas.</p><button onClick={()=>{setQuery('');setMethod('TODOS')}}>Ver todos os drinks</button></div>}</section>
  </main><footer><a className="brand" href="./">drink cards.</a><span>Feito para escolher, preparar e brindar.</span><span>Aprecie com moderação.</span></footer>{roulette && <Roulette entries={roulette.entries} winner={roulette.winner} onFinish={setChosen} onClose={() => setRoulette(null)} onView={viewRecipe}/>}{fullRecipe && <FullRecipe card={fullRecipe} onClose={returnHome}/>}</>;

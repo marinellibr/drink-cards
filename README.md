@@ -36,3 +36,7 @@ O workflow instala as dependências com `npm ci`, executa os testes, gera o buil
 ## Leitura das receitas
 
 A lista usa accordions acessíveis: toque no título para expandir uma receita quase na altura da tela. Apenas uma fica aberta por vez. Depois da roleta, **Ver receita** abre o drink em tela cheia, com **Voltar para home** no canto superior. A busca e os filtros são preservados ao voltar; Escape também fecha a visualização.
+
+## Fotos
+
+Cada drink tem uma foto ilustrativa da bebida ou de seu ingrediente em destaque. As imagens aparecem nas miniaturas dos accordions e nas receitas, incluindo a tela cheia. Os arquivos WebP ficam em `public/images/`, com carregamento sob demanda e alternativa em caso de erro. Fontes e créditos: [IMAGE_CREDITS.md](IMAGE_CREDITS.md).
