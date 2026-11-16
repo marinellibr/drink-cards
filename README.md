@@ -1,6 +1,6 @@
-# Drink Cards 🍸
+# Drink Cards
 
-Projeto simples com React e Vite: 19 receitas com ingredientes e método de preparo, busca sem distinção de acentos, filtros e sorteio entre os resultados visíveis. O sorteio destaca o card e evita repetir a última escolha quando possível. Interface responsiva em português.
+Projeto simples com React e Vite: 19 receitas com ingredientes e método de preparo, busca sem distinção de acentos, filtros e sorteio entre os resultados visíveis. A roleta animada sorteia entre os resultados visíveis, apresenta o vencedor e permite abrir sua receita. Evita repetir a última escolha quando possível e respeita a preferência por movimento reduzido. Interface responsiva em português.
 
 ## Executar
 

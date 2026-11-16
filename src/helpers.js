@@ -6,3 +6,9 @@ export function randomCard(cards, previousId) {
  const choices = cards.length > 1 ? cards.filter(card => card.id !== previousId) : cards;
  return choices[Math.floor(Math.random() * choices.length)] ?? null;
 }
+
+// Segment centers start at 12 o'clock, matching the CSS conic gradient.
+export function wheelRotation(count, winnerIndex) {
+ if (!Number.isInteger(count) || count < 1 || !Number.isInteger(winnerIndex) || winnerIndex < 0 || winnerIndex >= count) throw new RangeError('Segmento inválido');
+ return 6 * 360 - (winnerIndex + .5) * (360 / count);
+}
