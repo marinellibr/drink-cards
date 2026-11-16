@@ -32,3 +32,7 @@ O projeto está configurado para https://marinellibr.github.io/drink-cards/.
 3. Em **Actions → Deploy to GitHub Pages**, acompanhe a execução. Se necessário, toque em **Run workflow** na branch `main`.
 
 O workflow instala as dependências com `npm ci`, executa os testes, gera o build e publica `dist/`. Novos pushes em `main` atualizam o site automaticamente. O caminho `/drink-cards/` está definido em `vite.config.js`.
+
+## Leitura das receitas
+
+A lista usa accordions acessíveis: toque no título para expandir uma receita quase na altura da tela. Apenas uma fica aberta por vez. Depois da roleta, **Ver receita** abre o drink em tela cheia, com **Voltar para home** no canto superior. A busca e os filtros são preservados ao voltar; Escape também fecha a visualização.

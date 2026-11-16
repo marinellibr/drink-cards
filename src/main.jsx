@@ -30,31 +30,61 @@ function Roulette({ entries, winner, onFinish, onClose, onView }) {
   <details className="wheel-legend"><summary>Drinks na roleta</summary><ol>{entries.map(card => <li key={card.id}><span>{card.id}</span> {card.nome}</li>)}</ol></details>
  </dialog>;
 }
+function RecipeContent({ card, fullscreen = false }) {
+ const Heading = fullscreen ? 'h1' : 'h4';
+ return <div className="recipe-content">
+  <div className={`card-art recipe-art color-${Number(card.id) % 5}`} aria-hidden="true"><span className="number">NO. {card.id}</span><Glass martini={card.preparo === 'BATIDO'}/></div>
+  <div className="recipe-body"><p className="eyebrow">RECEITA {card.id}</p><Heading id={fullscreen ? 'recipe-title' : undefined}>{card.nome}</Heading><span className={`badge ${card.preparo.toLowerCase()}`}>{card.preparo}</span><p className="ingredients-label">INGREDIENTES</p><ul>{card.ingredientes.map(item => <li key={item}>{item}</li>)}</ul><div className="recipe-method"><p className="ingredients-label">MÉTODO DE PREPARO</p><p>{card.preparo.charAt(0) + card.preparo.slice(1).toLowerCase()}</p></div></div>
+ </div>;
+}
+function FullRecipe({ card, onClose }) {
+ const dialog = useRef(null);
+ useEffect(() => {
+  const previousOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+  dialog.current.showModal();
+  return () => { document.body.style.overflow = previousOverflow; };
+ }, []);
+ return <dialog ref={dialog} className="full-recipe" aria-labelledby="recipe-title" onCancel={onClose}>
+  <div className="recipe-toolbar"><button className="back-home" onClick={onClose} autoFocus>Voltar para home</button><span>drink cards.</span></div>
+  <article className="fullscreen-card"><RecipeContent card={card} fullscreen/></article>
+ </dialog>;
+}
 function App() {
  const [query,setQuery] = useState('');
  const [method,setMethod] = useState('TODOS');
  const [chosen,setChosen] = useState(null);
  const [roulette,setRoulette] = useState(null);
+ const [expanded,setExpanded] = useState(null);
+ const [fullRecipe,setFullRecipe] = useState(null);
+ const randomButton = useRef(null);
  const visible = filterCards(cards,query,method);
  function choose() {
   const winner = randomCard(visible,chosen?.id);
   if (winner) setRoulette({ entries: [...visible], winner });
  }
  function viewRecipe() {
-  const id = roulette.winner.id;
+  setFullRecipe(roulette.winner);
   setRoulette(null);
-  requestAnimationFrame(() => {
-   const el = document.getElementById(`drink-${id}`);
-   el?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});
-   el?.focus({preventScroll:true});
-  });
+ }
+ function returnHome() {
+  setFullRecipe(null);
+  requestAnimationFrame(() => randomButton.current?.focus({ preventScroll: true }));
+ }
+ function toggleCard(id) {
+  const opening = expanded !== id;
+  setExpanded(opening ? id : null);
+  if (opening) requestAnimationFrame(() => document.getElementById(`drink-${id}`)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));
  }
  return <><header><a className="brand" href="./">drink cards.</a><span className="top-note">BONS DRINKS, BOAS HISTÓRIAS.</span></header><main>
- <section className="hero"><div><p className="eyebrow">— SEU BAR EM 19 RECEITAS</p><h1>Um card.<br/>Um novo <em>brinde.</em></h1><p className="intro">Dos clássicos aos seus novos favoritos.<br/>Encontre uma receita, separe o gelo e aproveite.</p><button className="random" onClick={choose} disabled={!visible.length}>Girar a roleta</button><p className="note">Gire a roleta e descubra seu próximo drink.</p></div><div className="hero-art" aria-hidden="true"><Glass martini/><span className="art-note">A vida pede um brinde.</span></div></section>
+ <section className="hero"><div><p className="eyebrow">— SEU BAR EM 19 RECEITAS</p><h1>Um card.<br/>Um novo <em>brinde.</em></h1><p className="intro">Dos clássicos aos seus novos favoritos.<br/>Encontre uma receita, separe o gelo e aproveite.</p><button ref={randomButton} className="random" onClick={choose} disabled={!visible.length}>Girar a roleta</button><p className="note">Gire a roleta e descubra seu próximo drink.</p></div><div className="hero-art" aria-hidden="true"><Glass martini/><span className="art-note">A vida pede um brinde.</span></div></section>
  <section className="collection" aria-labelledby="collection-title"><div className="heading"><div><p className="eyebrow">O MENU ESTÁ NA MESA</p><h2 id="collection-title">Explore os drinks<span>.</span></h2></div><span className="total">19 receitas, muitas possibilidades</span></div>
  <div className="controls"><label className="search"><span className="sr-only">Buscar por nome ou ingrediente</span><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Busque um drink ou ingrediente…"/>{query && <button aria-label="Limpar busca" onClick={()=>setQuery('')}>Limpar</button>}</label><div className="filters" aria-label="Filtrar por preparo">{['TODOS','MONTADO','BATIDO','MACERADO','LIQUIDIFICADO'].map(m=><button key={m} aria-pressed={m===method} onClick={()=>setMethod(m)} className={m===method?'active':''}>{m==='TODOS'?'Todos':m[0]+m.slice(1).toLowerCase()}</button>)}</div></div>
  <div className="results" role="status"><span>{visible.length} {visible.length===1?'drink encontrado':'drinks encontrados'}</span>{chosen && <span>Seu sorteio: {chosen.nome}</span>}</div>
- {visible.length ? <div className="grid">{visible.map(card=><article key={card.id} id={`drink-${card.id}`} tabIndex={-1} className={`card ${chosen?.id===card.id?'selected':''}`}><div className={`card-art color-${Number(card.id)%5}`}><span className="number">NO. {card.id}</span><Glass martini={card.preparo==='BATIDO'}/>{chosen?.id===card.id && <span className="chosen">Sorteado</span>}</div><div className="card-body"><span className={`badge ${card.preparo.toLowerCase()}`}>{card.preparo}</span><h3>{card.nome}</h3><p className="ingredients-label">INGREDIENTES</p><ul>{card.ingredientes.map(i=><li key={i}>{i}</li>)}</ul></div></article>)}</div> : <div className="empty"><h3>Nenhum drink por aqui.</h3><p>Tente outro ingrediente ou explore todas as receitas.</p><button onClick={()=>{setQuery('');setMethod('TODOS')}}>Ver todos os drinks</button></div>}</section>
- </main><footer><a className="brand" href="./">drink cards.</a><span>Feito para escolher, preparar e brindar.</span><span>Aprecie com moderação.</span></footer>{roulette && <Roulette entries={roulette.entries} winner={roulette.winner} onFinish={setChosen} onClose={() => setRoulette(null)} onView={viewRecipe}/>}</>;
+ {visible.length ? <div className="accordion-list">{visible.map(card => <article key={card.id} id={`drink-${card.id}`} className={`drink-accordion ${chosen?.id === card.id ? 'selected' : ''} ${expanded === card.id ? 'is-open' : ''}`}>
+  <h3 className="accordion-heading"><button id={`toggle-${card.id}`} className="accordion-trigger" aria-expanded={expanded === card.id} aria-controls={`recipe-${card.id}`} onClick={() => toggleCard(card.id)}><span className="accordion-number">{card.id}</span><span className="accordion-name">{card.nome}</span>{chosen?.id === card.id && <span className="accordion-chosen">Sorteado</span>}<span className="accordion-action">{expanded === card.id ? 'Fechar' : 'Abrir'}</span></button></h3>
+  <div id={`recipe-${card.id}`} role="region" aria-labelledby={`toggle-${card.id}`} hidden={expanded !== card.id}><RecipeContent card={card}/></div>
+ </article>)}</div> : <div className="empty"><h3>Nenhum drink por aqui.</h3><p>Tente outro ingrediente ou explore todas as receitas.</p><button onClick={()=>{setQuery('');setMethod('TODOS')}}>Ver todos os drinks</button></div>}</section>
+ </main><footer><a className="brand" href="./">drink cards.</a><span>Feito para escolher, preparar e brindar.</span><span>Aprecie com moderação.</span></footer>{roulette && <Roulette entries={roulette.entries} winner={roulette.winner} onFinish={setChosen} onClose={() => setRoulette(null)} onView={viewRecipe}/>}{fullRecipe && <FullRecipe card={fullRecipe} onClose={returnHome}/>}</>;
 }
 createRoot(document.getElementById('root')).render(<React.StrictMode><App/></React.StrictMode>);
