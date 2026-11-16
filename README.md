@@ -22,3 +22,13 @@ Edite as receitas em `src/cards.js`. Ilustrações SVG são locais; fontes do Go
 ## Paleta
 
 Violeta profundo `#3B146B`, roxo `#7B208F`, magenta `#C9349B`, rosa coral `#F36A78`, coral `#F87572`, laranja `#FF9B55` e amarelo quente `#FFB458`. As cores estão centralizadas em variáveis CSS em `src/style.css`.
+
+## GitHub Pages
+
+O projeto está configurado para https://marinellibr.github.io/drink-cards/.
+
+1. No repositório, abra **Settings → Pages**.
+2. Em **Build and deployment → Source**, selecione **GitHub Actions**.
+3. Em **Actions → Deploy to GitHub Pages**, acompanhe a execução. Se necessário, toque em **Run workflow** na branch `main`.
+
+O workflow instala as dependências com `npm ci`, executa os testes, gera o build e publica `dist/`. Novos pushes em `main` atualizam o site automaticamente. O caminho `/drink-cards/` está definido em `vite.config.js`.
